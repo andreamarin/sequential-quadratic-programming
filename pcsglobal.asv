@@ -103,6 +103,6 @@ while norm(vk,2) >= tol && k <= maxk
 end   
 
 x = xk;
-lambda = lambdak;
+lambda = lambdak1;
 
 end
