@@ -20,20 +20,21 @@ function [x,lambda,k] =  pcsglobal(fx,hx,x0)
 % lambda = multiplicador de Lagrange asociado a x
 % k = número de iteraciones realizadas
 
+
 m = length(feval(hx, x0));
 n = length(x0);
+
+% Parámetros
 tol = 1e-05;
 maxk = 100;
 C1 = 1e-02;
 C0 = 1;
+
+% Valores iniciales
 lambdak = zeros(m,1);
 Bk = eye(n);
 xk = x0;
 k=1;
-
-%size(gradiente(fx,xk) + jacobiana(hx,xk)'*lambdak)
-size(feval(hx,xk))
-
 vk = vertcat(gradiente(fx,xk) + jacobiana(hx,xk)'*lambdak,feval(hx,xk));
 
 while norm(vk,2) >= tol && k <= maxk
@@ -48,7 +49,7 @@ while norm(vk,2) >= tol && k <= maxk
     
     lambdak1 = lambdak1.eqlin;
     
-    % Escogemos Ck+1
+    % Escogemos Ck+1 tal que Dpkphi(xk,Ck+1)<0
     C = gradfk'*pk/norm(hk,1);
     
     if C < 0
@@ -68,31 +69,30 @@ while norm(vk,2) >= tol && k <= maxk
         aux = feval(fx,xk+alphak*pk) + C*norm(feval(hx,xk+alphak*pk),1);
     end
     
-    % Actualizamos
+    % Actualizamos xk+1, sk y yk 
     xk1 = xk + alphak*pk;
     sk = xk1 - xk;
     
-    % Usamos la forma cerrada del gradiente de la función lagrangiana
+      % Usamos la forma cerrada del gradiente de la función lagrangiana
     yk = gradiente(fx,xk1) + jacobiana(hx,xk1)'*lambdak1 - gradiente(fx,xk) - jacobiana(hx,xk)'*lambdak1;
     
-    % Actualización con Powell
+    % Actualización de Bk+1 de acuerdo al esquema BFGS con esquema de Powell
     
     aux = sk'*Bk*sk;
  
     if (sk'*yk > 0.2*aux)
         r = yk;
-    else %actualizar el vector r
+    else 
         theta = (0.8*aux)/(aux - sk'*yk);
         r = theta*yk + (1 - theta)*Bk*sk;
     end
     
     Bk = Bk - ((Bk*sk*sk'*Bk)/aux) + (r*r')/(sk'*r);
  
-    %Corregir el error de matrices singulares
+    %Corregimos el error en caso que Bk sea singular
     if(rcond(Bk) < 1e-04) 
         Bk = eye(n);
     end
- 
     
     % Actualizamos valores
     xk = xk1;

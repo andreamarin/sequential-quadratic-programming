@@ -1,18 +1,26 @@
-function [h] = hesfera(x)
-% Funci贸n de restricciones del problema de np puntos en la esfera unitaria
-% de dimensi贸n tres.
-%
-% Optimizaci贸n Num茅rica
+% Optimizaci髇 Num閞ica
 % ITAM
 % Proyecto 2 - PCS
-% Andrea Mar铆n Alarc贸n (158999), Andrea P茅rez Vega (154467) 
+% Andrea Mar韓 Alarc髇 (158999), Andrea P閞ez Vega (154467) 
 % y Luis Felipe Landa Elizarralde (158228)
 
+
+function [h] = hesfera(x)
+% Funci髇 de restricciones del problema de np puntos en la esfera unitaria
+% de dimensi髇 tres.
+
+% In:
+% x: vector en donde se evalua h(x)
+
+% Out:
+% h: restricci髇 h evaluada en x
+
 n = length(x);
-np = floor(n/3);
-h = zeros(np,1);
+np = floor(n/3); % N鷐ero de puntos en la esfera
+h = zeros(np,1); 
+
 for j = 1:np
-    uj = x(3*(j-1)+1:3*j);
-    h(j) = uj'*uj-1;
+    uj = x(3*(j-1)+1:3*j); % Punto uj.
+    h(j) = uj'*uj-1; % Restricci髇 uj'uj = 1
 end
 end

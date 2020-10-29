@@ -1,23 +1,30 @@
-function [f] = fesfera(x)
-% Funci贸n de repulsi贸n para (n/3) puntos en la esfera unitaria de 
-% dimensi贸n tres.
-%
-% Optimizaci贸n Num茅rica
+% Optimizaci髇 Num閞ica
 % ITAM
 % Proyecto 2 - PCS
-% Andrea Mar铆n Alarc贸n (158999), Andrea P茅rez Vega (154467) 
+% Andrea Mar韓 Alarc髇 (158999), Andrea P閞ez Vega (154467) 
 % y Luis Felipe Landa Elizarralde (158228)
-%
-x = vertcat([1;0;0],x);
+
+
+function [f] = fesfera(x)
+% Funci髇 de repulsi髇 para (n/3) puntos en la esfera unitaria de 
+% dimensi髇 tres.
+
+% In:
+% x: vector en donde se evalua f(x)
+
+% Out:
+% h: funci髇 f evaluada en x
+
+x = vertcat([1;0;0],x); % u1 = (1,0,0)' es fijo.
 n = length(x);
-np = floor(n/3); % n煤mero de puntos en la esfera
-f = 0;           % valor inicial de f
+np = floor(n/3); % N鷐ero de puntos en la esfera
+f = 0;           
 
 for i = 1:np-1
-   ui = x(3*(i-1)+1:3*i);         % anclados en el punto ui
+   ui = x(3*(i-1)+1:3*i);         % Anclados en el punto ui.
    for j =i+1:np
-        uj = x(3*(j-1)+1:3*j);      % punto uj
-      f = f+(1/norm(ui-uj));    % la funci贸n crece en sumandos.
+        uj = x(3*(j-1)+1:3*j);      % Punto uj.
+      f = f+(1/norm(ui-uj));    % La funci髇 crece en sumandos.
    end    
 end
 

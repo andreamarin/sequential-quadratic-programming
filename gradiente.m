@@ -1,3 +1,9 @@
+% Optimización Numérica
+% ITAM
+% Proyecto 2 - PCS
+% Andrea Marín Alarcón (158999), Andrea Pérez Vega (154467) 
+% y Luis Felipe Landa Elizarralde (158228)
+
 function [gf] = gradiente(fx,x0)
 % Calcula por diferencias hacia adelante el gradiente de fx: R^n --> R
 % (gf)_k = parcial de fx/parcial/x_k
