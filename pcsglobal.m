@@ -31,7 +31,10 @@ Bk = eye(n);
 xk = x0;
 k=1;
 
-vk = vertcat(gradiente(fx,xk) + jacobiana(hx,xk)'*lambdak,feval(hx,xk)');
+%size(gradiente(fx,xk) + jacobiana(hx,xk)'*lambdak)
+size(feval(hx,xk))
+
+vk = vertcat(gradiente(fx,xk) + jacobiana(hx,xk)'*lambdak,feval(hx,xk));
 
 while norm(vk,2) >= tol && k <= maxk
     
@@ -97,7 +100,7 @@ while norm(vk,2) >= tol && k <= maxk
     k = k + 1;
     
     %Calculamos vk
-    vk = vertcat(gradiente(fx,xk) + jacobiana(hx,xk)'*lambdak,feval(hx,xk)');   
+    vk = vertcat(gradiente(fx,xk) + jacobiana(hx,xk)'*lambdak,feval(hx,xk));   
     
     
 end   
